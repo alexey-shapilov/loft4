@@ -1,0 +1,55 @@
+@import "../_common/variables";
+
+.contacts {
+  width: $content_width;
+  background: #f2f2f4;
+  @include border-radius(4px);
+  padding: 15px;
+}
+
+.contacts_left {
+  float: left;
+}
+
+.contacts-list__row {
+  cursor: pointer;
+}
+
+.contact-image {
+  width: 130px;
+  height: 130px;
+
+  img {
+    max-width: 128px;
+    max-height: 128px;
+    @include border-radius(6px);
+    margin: auto;
+  }
+}
+
+.contact-edit {
+  width: 595px;
+  margin: 50px auto 85px;
+}
+
+.contact-image_edit {
+  width: 200px;
+  height: 200px;
+
+  img {
+    max-width: 198px;
+    max-height: 198px;
+  }
+}
+
+.contact-edit__left {
+  float: left;
+  width: 200px;
+}
+
+.contact-edit__right {
+  float: right;
+  width: 270px;
+}
+
+@import "../_block/contacts-grid";

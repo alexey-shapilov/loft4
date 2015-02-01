@@ -1,0 +1,42 @@
+@import "../_common/variables";
+
+.navigate {
+  width: $content_width;
+}
+
+.navigate__back {
+  display: block;
+  text-decoration: none;
+  @include border-radius(4px);
+  color: #fff;
+  border: solid 1px #fff;
+  width: 26px;
+  height: 26px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.icon {
+  vertical-align: middle;
+}
+
+.navigate__left {
+  float: left;
+}
+
+.navigate__right {
+  float: right;
+}
+
+.navigate__view {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.navigate_hide {
+  display: none;
+}
+
+.navigate_active {
+  color: #e3e3e3;
+}

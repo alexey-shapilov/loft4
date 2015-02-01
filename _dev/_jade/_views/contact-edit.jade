@@ -1,0 +1,24 @@
+.contacts
+    form(name="formContact")
+        .contact-edit.clearfix
+            .contact-edit__left
+                .contact-image.contact-image_edit
+                    img(src="http://lorempixel.com/400/400/")
+                .contact_buttons
+                    .btn.btn-default.pull-left(ng-disabled="!formContact.$valid" ng-click="contact.save()") {{btnName}}
+                    .btn.btn-default.pull-right Удалить
+            .contact-edit__right
+                div.form-group(ng-class="{'has-error':formContact.firstname.$invalid && formContact.firstname.$dirty}")
+                    label(for="firstname") Имя
+                    input.form-control(type="text" id="firstname" name="firstname" placeholder="Имя контакта" ng-model="contact.data.firstname" required=)
+                div.form-group(ng-class="{'has-error':formContact.lastname.$invalid && formContact.lastname.$dirty}")
+                    label(for="lastname") Фамилия
+                    input.form-control(type="text" id="lastname" name="lastname" placeholder="Фамилия контакта" ng-model="contact.data.lastname" required)
+                div.form-group
+                    label Контактная информация
+                    .input-group(ng-class="{'has-error':formContact.email.$invalid && formContact.email.$dirty}")
+                        span.input-group-addon(id="basic-addon1") @
+                        input.form-control(type="email" placeholder="email" name="email" aria-describedby="basic-addon1" ng-model="contact.data.email" required)
+                    .input-group(ng-class="{'has-error':formContact.phone.$invalid && formContact.phone.$dirty || formContact.phone.$error.pattern}")
+                        span.input-group-addon.glyphicon.glyphicon-earphone(id="basic-addon2")
+                        input.form-control(type="text" name="phone" ng-pattern="/^[0-9]{11}$/" placeholder="79111234566" aria-describedby="basic-addon2" ng-model="contact.data.phone" required)

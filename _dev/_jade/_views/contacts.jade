@@ -1,0 +1,19 @@
+.contacts.clearfix
+    table.table.table-hover.contacts-list(ng-if="nav.contactsList")
+        thead.table-head
+            each title in ['#','Имя','Фамилия','Телефон','Email']
+                th #{title}
+        tbody
+            tr.contacts-list__row(ng-repeat="contact in contacts" ng-click="editContact(contact.$id)")
+                td {{contact.$id}}
+                td {{contact.firstname}}
+                td {{contact.lastname}}
+                td {{contact.phone}}
+                td {{contact.email}}
+    .contacts-grid.cf(ng-if="!nav.contactsList")
+            .contact.contacts_left(ng-repeat="contact in contacts")
+                .contact-image
+                    img(src="http://lorempixel.com/400/400/")
+                .contact__name {{contact.firstname}} {{contact.lastname}}
+                .contact__phone {{contact.phone}}
+                .contact__email {{contact.email}}

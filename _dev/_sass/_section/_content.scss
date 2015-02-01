@@ -1,0 +1,8 @@
+@import "../_common/variables";
+@import "../_common/mixin";
+@import "contacts";
+
+.content {
+  margin: auto;
+  width: $content_width;
+}
