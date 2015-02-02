@@ -22,18 +22,23 @@
         }
     ]);
 
-    contactsControllers.controller('ContactsController', ['$scope', 'contactsDb', '$location',
-        function ($scope, contactsDb, $location) {
+    contactsControllers.controller('ContactsController', ['$scope', 'contactsDb', '$location', '$filter',
+        function ($scope, contactsDb, $location, $filter) {
             $scope.nav.btnAdd = true;
             $scope.contacts = contactsDb.contacts;
             $scope.editContact = function (id) {
                 $location.path('/contact/edit/' + id)
+            };
+            $scope.sort = function (field, reverse) {
+                console.log($scope.contacts);
+                $filter('orderBy')($scope.contacts, field, reverse)
             }
         }
     ]);
 
-    contactsControllers.controller('ContactController', ['$scope', 'contactsDb', '$routeParams',
-        function ($scope, contactsDb, $routeParams) {
+    contactsControllers.controller('ContactController', ['$scope', 'contactsDb', '$routeParams', 'fileUpload',
+        function ($scope, contactsDb, $routeParams, fileUpload) {
+            console.log('fileUpload: ', fileUpload);
             $scope.nav.btnAdd = false;
 
             $scope.btnName = 'Добавить';

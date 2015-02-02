@@ -7,14 +7,17 @@
                 .contact_buttons
                     .btn.btn-default.pull-left(ng-disabled="!formContact.$valid" ng-click="contact.save()") {{btnName}}
                     .btn.btn-default.pull-right Удалить
-            .contact-edit__right
-                div.form-group(ng-class="{'has-error':formContact.firstname.$invalid && formContact.firstname.$dirty}")
+                    .form-group
+                        label(for="lastname") Изображение
+                        input.form-control(type="file" id="f" name="lastname" placeholder="Фамилия контакта" file-upload="")
+        .contact-edit__right
+                .form-group(ng-class="{'has-error':formContact.firstname.$invalid && formContact.firstname.$dirty}")
                     label(for="firstname") Имя
                     input.form-control(type="text" id="firstname" name="firstname" placeholder="Имя контакта" ng-model="contact.data.firstname" required=)
-                div.form-group(ng-class="{'has-error':formContact.lastname.$invalid && formContact.lastname.$dirty}")
+                .form-group(ng-class="{'has-error':formContact.lastname.$invalid && formContact.lastname.$dirty}")
                     label(for="lastname") Фамилия
                     input.form-control(type="text" id="lastname" name="lastname" placeholder="Фамилия контакта" ng-model="contact.data.lastname" required)
-                div.form-group
+                .form-group
                     label Контактная информация
                     .input-group(ng-class="{'has-error':formContact.email.$invalid && formContact.email.$dirty}")
                         span.input-group-addon(id="basic-addon1") @

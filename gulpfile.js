@@ -19,7 +19,7 @@ productionPath = './app/';
 //
 // Задача собирает проект с php
 //
-$.gulp.task('build-with-php', ['sass'], function () {
+$.gulp.task('build-with-php', ['jade-views', 'sass'], function () {
     var assets = $.useref.assets();
     $.rimraf.sync(productionPath, function (er) {
         console.log('myErr');
@@ -50,6 +50,10 @@ $.gulp.task('build-with-php', ['sass'], function () {
         .pipe($.gulp.dest(function (file) {
             return file.base.substr((file.cwd + '/_dev/_server').length + 1);
         }, {cwd: productionPath})).on('error', log);
+
+    $.gulp.src('./_dev/_jade/_views/*.html')
+        .pipe($.gulp.dest('./app/views/'));
+
     // шрифты
     $.gulp.src('./_dev/_sass/fonts/*')
         .pipe($.gulp.dest('./app/css/fonts/'));
@@ -139,7 +143,7 @@ $.gulp.task('build-without-php', ['jade', 'jade-views', 'sass'], function () {
         .pipe($.gulp.dest('./app'));
 });
 
-$.gulp.task('connect', function() {
+$.gulp.task('connect', function () {
     $.connect.server({
         root: productionPath,
         livereload: true
@@ -160,7 +164,7 @@ $.gulp.task('watch-without-php', ['build-without-php'], function () {
 });
 
 $.gulp.task('watch-with-php', ['build-with-php'], function () {
-    $.gulp.watch(['./_dev/_js/**/*.js', './_dev/_server/**/*.php', './_dev/_sass/**/*.scss', './_dev/_sass/fonts/*'], ['watch-with-php']);
+    $.gulp.watch(['./_dev/_jade/_views/*.jade', './_dev/_js/**/*.js', './_dev/_server/**/*.php', './_dev/_sass/**/*.scss', './_dev/_sass/fonts/*'], ['watch-with-php']);
 });
 
 $.gulp.task('default', ['watch-without-php']);

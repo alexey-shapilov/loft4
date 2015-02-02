@@ -2,10 +2,10 @@
   "name": "loft4",
   "dependencies": {
     "modernizr": "~2.8.3",
-    "jquery": "~1.11.2",
+    "jquery": "~2.1.3",
+    "bootstrap": "~3.3.2",
     "angular": "~1.3.11",
     "angular-route": "~1.3.11",
-    "bootstrap": "~3.3.2",
     "angular-animate": "~1.3.11"
   },
   "devDependencies": {}
