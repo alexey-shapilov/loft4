@@ -29,9 +29,8 @@
             $scope.editContact = function (id) {
                 $location.path('/contact/edit/' + id)
             };
-            $scope.sort = function (field, reverse) {
-                console.log($scope.contacts);
-                $filter('orderBy')($scope.contacts, field, reverse)
+            $scope.order = function (field, reverse) {
+                $scope.contacts = $filter('orderBy')($scope.contacts, field, reverse)
             }
         }
     ]);
