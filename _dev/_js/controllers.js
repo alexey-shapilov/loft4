@@ -7,20 +7,14 @@
                 lastname: ''
             };
             $scope.nav = {
-                contactsList: true,
+                contactsList: 'list',
                 btnAdd: true,
                 clickList: function () {
-                    this.contactsList = true;
+                    this.contactsList = 'list';
                 },
                 clickGrid: function () {
-                    this.contactsList = false;
+                    this.contactsList = 'grid';
                 }
-                //clickBack: function () {
-                //    this.btnAdd = true;
-                //},
-                //clickAdd: function () {
-                //    this.btnAdd = false;
-                //}
             };
             $scope.header = {
                 title: ''
@@ -32,10 +26,13 @@
         function ($scope, contactsDb, $location, $filter) {
             $scope.nav.btnAdd = true;
             $scope.contacts = contactsDb.contacts;
+            $scope.rev={};
             $scope.editContact = function (id) {
                 $location.path('/contact/edit/' + id)
             };
             $scope.order = function (field, reverse) {
+                $scope.rev[field] = reverse;
+                $scope.rev.active = field;
                 $scope.contacts = $filter('orderBy')($scope.contacts, field, reverse)
             };
             $scope.header.title = 'Контакты';
@@ -55,7 +52,7 @@
                     lastname: '',
                     email: '',
                     phone: '',
-                    img: 'http://lorempixel.com/400/200/'
+                    img: 'http://lorempixel.com/200/200/'
                 },
                 save: function () {
                     contactsDb.save(this.data).then(function (ref) {

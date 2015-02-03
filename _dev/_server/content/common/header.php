@@ -39,6 +39,7 @@ if (!defined('INIT')) exit('No direct script access allowed');
     <script src="../../../_js/app.js"></script>
     <script src="../../../_js/controllers.js"></script>
     <script src="../../../_js/services.js"></script>
+    <script src="../../../_js/directives.js"></script>
     <!-- endbuild-->
 </head>
 <body>

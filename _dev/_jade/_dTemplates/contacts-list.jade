@@ -1,0 +1,14 @@
+table.table.table-hover.contacts-list
+    thead.table-head.contacts-head__row
+        th #
+        - var fields = ['firstname','lastname','phone','email']
+        each title,ind in ['Имя','Фамилия','Телефон','Email']
+            th(ng-click="reverse." + fields[ind] + "=!reverse." + fields[ind] + ";order(" + "'" + fields[ind] + "'" + ",reverse." + fields[ind] + ");t=true") #{title}
+                span.fa.sort(ng-class="{'fa-sort-asc':(rev.active=='" + fields[ind] + "' && rev[rev.active]),'fa-sort-desc':(rev.active=='" + fields[ind] + "' && !rev[rev.active])}")
+    tbody
+        tr.contacts-list__row(ng-repeat="contact in contacts | filter:search" ng-click="editContact(contact.$id)")
+            td {{$index+1}}
+            td {{contact.firstname}}
+            td {{contact.lastname}}
+            td {{contact.phone}}
+            td {{contact.email}}

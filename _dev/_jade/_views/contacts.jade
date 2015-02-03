@@ -1,20 +1,20 @@
-.contacts.clearfix
-    table.table.table-hover.contacts-list(ng-if="nav.contactsList")
-        thead.table-head
-            - var fields = ['$id','firstname','lastname','phone','email']
-            each title,ind in ['#','Имя','Фамилия','Телефон','Email']
-                th(ng-click="reverse=!reverse;order(" + "'" + fields[ind] + "'" + ",reverse)") #{title}
-        tbody
-            tr.contacts-list__row(ng-repeat="contact in contacts | filter:search" ng-click="editContact(contact.$id)")
-                td {{$index+1}}
-                td {{contact.firstname}}
-                td {{contact.lastname}}
-                td {{contact.phone}}
-                td {{contact.email}}
-    .contacts-grid.cf(ng-if="!nav.contactsList")
-        .contact.contacts_left(ng-repeat="contact in contacts | filter:search" ng-click="editContact(contact.$id)")
-            .contact-image
-                img(ng-src="{{contact.img}}")
-            .contact__name {{contact.firstname}} {{contact.lastname}}
-            .contact__phone {{contact.phone}}
-            .contact__email {{contact.email}}
+list-contacts(list-type='{{nav.contactsList}}')
+    //table.table.table-hover.contacts-list(ng-if="nav.contactsList")
+    //    thead.table-head
+    //        - var fields = ['$id','firstname','lastname','phone','email']
+    //        each title,ind in ['#','Имя','Фамилия','Телефон','Email']
+    //            th(ng-click="reverse=!reverse;order(" + "'" + fields[ind] + "'" + ",reverse)") #{title}
+    //    tbody
+    //        tr.contacts-list__row(ng-repeat="contact in contacts | filter:search" ng-click="editContact(contact.$id)")
+    //            td {{$index+1}}
+    //            td {{contact.firstname}}
+    //            td {{contact.lastname}}
+    //            td {{contact.phone}}
+    //            td {{contact.email}}
+    //.contacts-grid.cf(ng-if="!nav.contactsList")
+    //    .contact.contacts_left(ng-repeat="contact in contacts | filter:search" ng-click="editContact(contact.$id)")
+    //        .contact-image
+    //            img(ng-src="{{contact.img}}")
+    //        .contact__name {{contact.firstname}} {{contact.lastname}}
+    //        .contact__phone {{contact.phone}}
+    //        .contact__email {{contact.email}}

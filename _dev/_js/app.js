@@ -5,6 +5,7 @@
             'firebase',
             'contactsControllers',
             'contactsServices',
+            'contactsDirectives',
             'blueimp.fileupload'
         ]);
 

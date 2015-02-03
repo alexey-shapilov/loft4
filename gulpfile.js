@@ -19,7 +19,7 @@ productionPath = './app/';
 //
 // Задача собирает проект с php
 //
-$.gulp.task('build-with-php', ['jade-views', 'sass'], function () {
+$.gulp.task('build-with-php', ['jade-views', 'jade-dTpl', 'sass'], function () {
     var assets = $.useref.assets();
     $.rimraf.sync(productionPath, function (er) {
         console.log('myErr');
@@ -53,6 +53,9 @@ $.gulp.task('build-with-php', ['jade-views', 'sass'], function () {
 
     $.gulp.src('./_dev/_jade/_views/*.html')
         .pipe($.gulp.dest('./app/views/'));
+
+    $.gulp.src('./_dev/_jade/_dTemplates/*.html')
+        .pipe($.gulp.dest('./app/dTemplates/'));
 
     // шрифты
     $.gulp.src('./_dev/_sass/fonts/*')
@@ -95,6 +98,7 @@ $.gulp.task('jade', function () {
         })).on('error', log)
         .pipe($.gulp.dest('./_dev/_jade/_pages'));
 });
+
 $.gulp.task('jade-views', function () {
     return $.gulp.src('./_dev/_jade/_views/*.jade')
         // вызов плагина gulp-jade
@@ -104,10 +108,19 @@ $.gulp.task('jade-views', function () {
         .pipe($.gulp.dest('./_dev/_jade/_views'));
 });
 
+$.gulp.task('jade-dTpl', function () {
+    return $.gulp.src('./_dev/_jade/_dTemplates/*.jade')
+        // вызов плагина gulp-jade
+        .pipe($.jade({
+            pretty: true
+        })).on('error', log)
+        .pipe($.gulp.dest('./_dev/_jade/_dTemplates'));
+});
+
 //
 // Собираем проект без PHP
 //
-$.gulp.task('build-without-php', ['jade', 'jade-views', 'sass'], function () {
+$.gulp.task('build-without-php', ['jade', 'jade-views', 'jade-dTpl', 'sass'], function () {
     var assets = $.useref.assets(); //Функция плагина gulp-useref
 
     // Плагин rimraf удаляет каталог в переменной productionPath
@@ -130,6 +143,9 @@ $.gulp.task('build-without-php', ['jade', 'jade-views', 'sass'], function () {
 
     $.gulp.src('./_dev/_jade/_views/*.html')
         .pipe($.gulp.dest('./app/views/'));
+
+    $.gulp.src('./_dev/_jade/_dTemplates/*.html')
+        .pipe($.gulp.dest('./app/dTemplates/'));
 
     // шрифты
     $.gulp.src('./_dev/_sass/fonts/*')
@@ -164,7 +180,7 @@ $.gulp.task('watch-without-php', ['build-without-php'], function () {
 });
 
 $.gulp.task('watch-with-php', ['build-with-php'], function () {
-    $.gulp.watch(['./_dev/_jade/_views/*.jade', './_dev/_js/**/*.js', './_dev/_server/**/*.php', './_dev/_sass/**/*.scss', './_dev/_sass/fonts/*'], ['watch-with-php']);
+    $.gulp.watch(['./_dev/_jade/_dTemplates/*.jade', './_dev/_jade/_views/*.jade', './_dev/_js/**/*.js', './_dev/_server/**/*.php', './_dev/_sass/**/*.scss', './_dev/_sass/fonts/*'], ['watch-with-php']);
 });
 
 $.gulp.task('default', ['watch-with-php']);

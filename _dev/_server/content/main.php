@@ -38,10 +38,10 @@ ob_start();
                     </div>
                     <div ng-if="nav.btnAdd" class="navigate__right">
                         <div ng-click="nav.clickList()" class="navigate__view">
-                            <span aria-hidden="true" class="icon fa fa-list" ng-class="{icon_active:nav.contactsList}"></span>
+                            <span aria-hidden="true" class="icon fa fa-list" ng-class="{icon_active:nav.contactsList=='list'}"></span>
                         </div>
                         <div ng-click="nav.clickGrid()" class="navigate__view">
-                            <span aria-hidden="true" class="icon fa fa-th-large" ng-class="{icon_active:!nav.contactsList}"></span>
+                            <span aria-hidden="true" class="icon fa fa-th-large" ng-class="{icon_active:nav.contactsList=='grid'}"></span>
                         </div>
                     </div>
                 </nav>
