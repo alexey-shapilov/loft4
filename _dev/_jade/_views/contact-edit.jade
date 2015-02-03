@@ -1,16 +1,14 @@
 .contacts
-    form(name="formContact")
+    form.clearfix(name="formContact")
         .contact-edit.clearfix
             .contact-edit__left
                 .contact-image.contact-image_edit
-                    img(src="http://lorempixel.com/400/400/")
-                .contact_buttons
+                    img(ng-src="{{contact.data.img}}")
+                    input.img-upload.form-control(type="file" name="upload" file-upload="" ng-model="contact.data.img")
+                .contact_buttons.clearfix
                     .btn.btn-default.pull-left(ng-disabled="!formContact.$valid" ng-click="contact.save()") {{btnName}}
-                    .btn.btn-default.pull-right Удалить
-                    .form-group
-                        label(for="lastname") Изображение
-                        input.form-control(type="file" id="f" name="lastname" placeholder="Фамилия контакта" file-upload="")
-        .contact-edit__right
+                    .btn.btn-default.pull-right(ng-disabled="contact.data.$id === undefined" ng-click="contact.remove()") Удалить
+            .contact-edit__right
                 .form-group(ng-class="{'has-error':formContact.firstname.$invalid && formContact.firstname.$dirty}")
                     label(for="firstname") Имя
                     input.form-control(type="text" id="firstname" name="firstname" placeholder="Имя контакта" ng-model="contact.data.firstname" required=)
@@ -23,5 +21,5 @@
                         span.input-group-addon(id="basic-addon1") @
                         input.form-control(type="email" placeholder="email" name="email" aria-describedby="basic-addon1" ng-model="contact.data.email" required)
                     .input-group(ng-class="{'has-error':formContact.phone.$invalid && formContact.phone.$dirty || formContact.phone.$error.pattern}")
-                        span.input-group-addon.glyphicon.glyphicon-earphone(id="basic-addon2")
+                        span.input-group-addon.fa.fa-phone(id="basic-addon2")
                         input.form-control(type="text" name="phone" ng-pattern="/^[0-9]{11}$/" placeholder="79111234566" aria-describedby="basic-addon2" ng-model="contact.data.phone" required)

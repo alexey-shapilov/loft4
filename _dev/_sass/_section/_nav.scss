@@ -2,22 +2,40 @@
 
 .navigate {
   width: $content_width;
+  margin-bottom: 18px;
 }
 
 .navigate__back {
   display: block;
   text-decoration: none;
   @include border-radius(4px);
-  color: #fff;
-  border: solid 1px #fff;
+  color: #838383;
+  border: solid 2px #838383;
   width: 26px;
   height: 26px;
   text-align: center;
   cursor: pointer;
+  &:hover {
+    color: #fff;
+    border: solid 2px #fff;
+  }
 }
 
 .icon {
   vertical-align: middle;
+  font-size: 24px;
+  color: #838383;
+  &:hover {
+    color: #fff;
+  }
+}
+
+.icon_active {
+  color: #fff;
+}
+
+.navigate_icon {
+  margin-top: -6px;
 }
 
 .navigate__left {
@@ -39,4 +57,8 @@
 
 .navigate_active {
   color: #e3e3e3;
+}
+
+.search {
+  margin-left: 10px;
 }

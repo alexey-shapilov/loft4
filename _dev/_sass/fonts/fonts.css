@@ -1,0 +1,16 @@
+
+@font-face {
+    font-family: 'Conv_segoeui';
+    src: url('segoeui.eot');
+    src: local('☺'), url('segoeui.woff') format('woff'), url('segoeui.ttf') format('truetype'), url('segoeui.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Conv_segoeuib';
+    src: url('segoeuib.eot');
+    src: local('☺'), url('segoeuib.woff') format('woff'), url('segoeuib.ttf') format('truetype'), url('segoeuib.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}

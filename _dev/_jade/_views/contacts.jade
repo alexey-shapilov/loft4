@@ -5,16 +5,16 @@
             each title,ind in ['#','Имя','Фамилия','Телефон','Email']
                 th(ng-click="reverse=!reverse;order(" + "'" + fields[ind] + "'" + ",reverse)") #{title}
         tbody
-            tr.contacts-list__row(ng-repeat="contact in contacts" ng-click="editContact(contact.$id)")
-                td {{contact.$id}}
+            tr.contacts-list__row(ng-repeat="contact in contacts | filter:search" ng-click="editContact(contact.$id)")
+                td {{$index+1}}
                 td {{contact.firstname}}
                 td {{contact.lastname}}
                 td {{contact.phone}}
                 td {{contact.email}}
     .contacts-grid.cf(ng-if="!nav.contactsList")
-        .contact.contacts_left(ng-repeat="contact in contacts")
+        .contact.contacts_left(ng-repeat="contact in contacts | filter:search" ng-click="editContact(contact.$id)")
             .contact-image
-                img(src="http://lorempixel.com/400/400/")
+                img(ng-src="{{contact.img}}")
             .contact__name {{contact.firstname}} {{contact.lastname}}
             .contact__phone {{contact.phone}}
             .contact__email {{contact.email}}

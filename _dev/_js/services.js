@@ -10,15 +10,14 @@
             return {
                 contacts: dataAsArray,
                 save: function (data) {
-                    if (data.$id !== undefined) {
-                        dataAsArray.$add(data).then(function (ref) {
-                            var id = ref.key();
-                            console.log("added record with id " + id);
-                            dataAsArray.$indexFor(id); // returns location in the array
-                        });
+                    if (data.$id === undefined) {
+                        return dataAsArray.$add(data);
                     } else {
-                        data.$save();
+                        return data.$save();
                     }
+                },
+                remove: function (id) {
+                    return sync.$remove(id)
                 },
                 getObject: function (id) {
                     var sync = $firebase(new Firebase(fbUrl + '/' + id));

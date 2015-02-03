@@ -3,6 +3,7 @@
 
 body, html {
   height: 100%;
+  font-family: Conv_segoeui, arial, sans-serif;
 }
 
 .container-wrapper {
@@ -22,10 +23,10 @@ body, html {
   animation: moveFromRight .6s ease both;
 }
 
-.pt-page.ng-leave {
-  -webkit-animation: moveToLeft .6s ease both;
-  animation: moveToLeft .6s ease both;
-}
+//.pt-page.ng-leave {
+//  -webkit-animation: moveToLeft .6s ease both;
+//  animation: moveToLeft .6s ease both;
+//}
 
 @-webkit-keyframes moveFromRight {
   from {

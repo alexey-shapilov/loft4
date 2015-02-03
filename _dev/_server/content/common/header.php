@@ -15,6 +15,8 @@ if (!defined('INIT')) exit('No direct script access allowed');
     <link rel="icon" type="image/ico" href="/favicon.ico">
     <link rel="SHORTCUT ICON" type="image/x-icon" href="/favicon.ico">
 
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
     <!-- build:css(_dev/_server/content/common) css/vendor.css-->
     <!-- bower:css-->
     <!-- endbower-->
@@ -30,10 +32,7 @@ if (!defined('INIT')) exit('No direct script access allowed');
     <!-- endbuild-->
 
     <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-    <!-- build:js(_dev/_server/content/common) js/mvendor.js-->
-    <script src="../../../_js/_vendor/jquery.fileupload.js"></script>
-    <script src="../../../_js/_vendor/jquery.fileupload-angular.js"></script>
-    <!-- endbuild-->
+
     <script src="https://cdn.firebase.com/js/client/2.1.0/firebase.js"></script>
     <script src="https://cdn.firebase.com/libs/angularfire/0.9.1/angularfire.min.js"></script>
     <!--build:js(_dev/_server/content/common) js/script.js-->

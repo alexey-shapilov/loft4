@@ -3,6 +3,9 @@
 
     contactsControllers.controller('MainController', ['$scope',
         function ($scope) {
+            $scope.search = {
+                lastname: ''
+            };
             $scope.nav = {
                 contactsList: true,
                 btnAdd: true,
@@ -19,6 +22,9 @@
                 //    this.btnAdd = false;
                 //}
             };
+            $scope.header = {
+                title: ''
+            };
         }
     ]);
 
@@ -31,13 +37,14 @@
             };
             $scope.order = function (field, reverse) {
                 $scope.contacts = $filter('orderBy')($scope.contacts, field, reverse)
-            }
+            };
+            $scope.header.title = 'Контакты';
         }
     ]);
 
-    contactsControllers.controller('ContactController', ['$scope', 'contactsDb', '$routeParams', 'fileUpload',
-        function ($scope, contactsDb, $routeParams, fileUpload) {
-            console.log('fileUpload: ', fileUpload);
+    contactsControllers.controller('ContactController', ['$scope', 'contactsDb', '$routeParams', '$location',
+        function ($scope, contactsDb, $routeParams, $location) {
+            $scope.header.title = 'Контакт';
             $scope.nav.btnAdd = false;
 
             $scope.btnName = 'Добавить';
@@ -47,12 +54,25 @@
                     firstname: '',
                     lastname: '',
                     email: '',
-                    phone: ''
+                    phone: '',
+                    img: 'http://lorempixel.com/400/200/'
                 },
                 save: function () {
-                    contactsDb.save($scope.contact.data);
+                    contactsDb.save(this.data).then(function (ref) {
+                        $scope.contact.data.$id = ref.key();
+                    });
+                },
+                remove: function () {
+                    if (this.data.$id) {
+                        contactsDb.remove(this.data.$id).then(function (ref) {
+                            console.log(ref.key());
+                            $location.path('/');
+                        })
+                    }
                 }
             };
+
+            console.log($scope.contact.data.$id);
 
             if ($routeParams.id !== undefined) {
                 $scope.btnName = 'Сохранить';
