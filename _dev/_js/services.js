@@ -11,9 +11,9 @@
                 contacts: dataAsArray,
                 save: function (data) {
                     if (data.$id === undefined) {
-                        return dataAsArray.$add(data);
+                        return {action: 'add', promise: dataAsArray.$add(data)};
                     } else {
-                        return data.$save();
+                        return {action: 'save', promise: data.$save()};
                     }
                 },
                 remove: function (id) {

@@ -5,6 +5,7 @@
 .contact {
   text-align: center;
   margin-left: 30px;
+  margin-bottom: 30px;
   cursor: pointer;
   &:nth-child(5n+1) {
     clear: left;
@@ -12,6 +13,23 @@
   }
 
   &:hover {
-    @include box-shadow(red 2px 2px 10px);
+    @include box-shadow(#9499B4 2px 2px 10px);
+    @include border-radius(6px);
   }
+}
+
+.contact__name {
+  width: 130px;
+}
+
+.picture__uploading {
+  width: 120px;
+  height: 128px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  background: url(img/uploading.gif) no-repeat;
 }

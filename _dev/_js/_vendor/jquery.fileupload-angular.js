@@ -17,10 +17,32 @@
             var $config = this.defaults = {
                 dataType: 'json',
                 autoUpload: false,
+                send: function (e, data) {
+                    var uploading = angular.element('<div class="picture__uploading"/>'),
+                        scope = angular.element(e.target).fileupload('option', 'scope'),
+                        picBlock = angular.element('.' + scope.picBlock);
+                    if (picBlock[0].tagName.toLowerCase() == 'div') {
+                        picBlock.css({position: 'relative'}).append(uploading);
+                    } else {
+                        picBlock.wrap('<div></div>').css({position: 'relative'}).append(uploading);
+                    }
+                },
                 done: function (e, data) {
-                    var scope = angular.element(e.target).fileupload('option', 'scope');
+                    var scope = angular.element(e.target).fileupload('option', 'scope'),
+                        picBlock = angular.element('.' + scope.picBlock),
+                        img = picBlock.find('img');
+
                     scope.imgSrc = data.result.src;
+                    if (img.length) {
+                        img.on('load', function () {
+                            picBlock.find('.picture__uploading').remove();
+                        })
+                    }
+
                     scope.$apply();
+                    if (!img.length) {
+                        picBlock.find('.picture__uploading').remove();
+                    }
                 }
             };
             this.$get = [
@@ -57,7 +79,9 @@
             return {
                 require: "ngModel",
                 controller: 'FileUploadController',
-                scope: true,
+                scope: {
+                    picBlock: '@'
+                },
                 link: function (scope, iElement, iAttrs, ngModelCtrl) {
                     ngModelCtrl.$render = function () {
                         scope.imgSrc = ngModelCtrl.$viewValue;

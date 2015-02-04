@@ -6,7 +6,7 @@ ob_start();
         your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a>
         to improve your experience.</p>
     <![endif]-->
-    <div ng-controller="MainController" class="container-wrapper clearfix">
+    <div ng-controller="MainController" class="container-wrapper clearfix" ng-cloak>
         <div class="main-container">
             <!-- ===================================== HEADER =====================================-->
             <div class="header">
@@ -16,7 +16,7 @@ ob_start();
         <div class="wrapper">
             <div class="content">
                 <!-- ======================================= NAV =======================================-->
-                <nav class="navigate clearfix">
+                <nav class="navigate clearfix" ng-cloak>
                     <div class="navigate__left">
                         <a href="#/" ng-if="!nav.btnAdd" class="navigate__back">
                             <span aria-hidden="true" class="icon navigate_icon fa fa-angle-left"></span>
@@ -46,7 +46,7 @@ ob_start();
                     </div>
                 </nav>
                 <!-- ===================================== CONTAINER =====================================-->
-                <div ng-view class="wrapper pt-page">
+                <div ng-view class="wrapper pt-page" ng-cloak>
                     <!--include ../_views/contact-edit-->
                     <!--include ../_views/contacts-->
                 </div>

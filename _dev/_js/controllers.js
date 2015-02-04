@@ -26,7 +26,7 @@
         function ($scope, contactsDb, $location, $filter) {
             $scope.nav.btnAdd = true;
             $scope.contacts = contactsDb.contacts;
-            $scope.rev={};
+            $scope.rev = {};
             $scope.editContact = function (id) {
                 $location.path('/contact/edit/' + id)
             };
@@ -43,20 +43,32 @@
         function ($scope, contactsDb, $routeParams, $location) {
             $scope.header.title = 'Контакт';
             $scope.nav.btnAdd = false;
+            $scope.alert = {
+                visible: false,
+                text: true
+            };
 
             $scope.btnName = 'Добавить';
 
             $scope.contact = {
                 data: {
-                    firstname: '',
-                    lastname: '',
-                    email: '',
-                    phone: '',
+                    firstname: 'Проверка',
+                    lastname: 'Добавления',
+                    email: 'email@email.ru',
+                    phone: '79112223344',
                     img: 'http://lorempixel.com/200/200/'
                 },
                 save: function () {
-                    contactsDb.save(this.data).then(function (ref) {
-                        $scope.contact.data.$id = ref.key();
+                    var result = contactsDb.save(this.data);
+                    result.promise.then(function (ref) {
+                        if (result.action == 'add') {
+                            $scope.contact.data = contactsDb.getObject(ref.key());
+                            $scope.btnName = 'Сохранить';
+                            $scope.alert.text = 'Контактные данные успешно добавлены'
+                        } else {
+                            $scope.alert.text = 'Контактные данные успешно сохранены'
+                        }
+                        $scope.alert.visible = true;
                     });
                 },
                 remove: function () {

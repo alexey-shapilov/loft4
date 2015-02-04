@@ -19,13 +19,13 @@ productionPath = './app/';
 //
 // Задача собирает проект с php
 //
-$.gulp.task('build-with-php', ['jade-views', 'jade-dTpl', 'sass'], function () {
+$.gulp.task('build-with-php', function () {
     var assets = $.useref.assets();
     $.rimraf.sync(productionPath, function (er) {
         console.log('myErr');
         if (er) throw er;
     });
-    $.gulp.src('./_dev/_server/**/*.php')
+    return $.gulp.src('./_dev/_server/**/*.php')
         .pipe($.wiredep.stream({
             directory: '_dev/_bower',
             fileTypes: {
@@ -43,33 +43,16 @@ $.gulp.task('build-with-php', ['jade-views', 'jade-dTpl', 'sass'], function () {
             }
         })).on('error', log)
         .pipe(assets).on('error', log)
-        //.pipe($.if('*.js', $.uglify())).on('error', log)
+        .pipe($.if('*.js', $.uglify())).on('error', log)
         //.pipe($.if('*.css', $.minifyCss())).on('error', log)
+        //.pipe($.if('*.css', $.rename(function (path) {
+        //    path.basename += ".min";
+        //})))
         .pipe(assets.restore()).on('error', log)
         .pipe($.useref()).on('error', log)
         .pipe($.gulp.dest(function (file) {
             return file.base.substr((file.cwd + '/_dev/_server').length + 1);
         }, {cwd: productionPath})).on('error', log);
-
-    $.gulp.src('./_dev/_jade/_views/*.html')
-        .pipe($.gulp.dest('./app/views/'));
-
-    $.gulp.src('./_dev/_jade/_dTemplates/*.html')
-        .pipe($.gulp.dest('./app/dTemplates/'));
-
-    // шрифты
-    $.gulp.src('./_dev/_sass/fonts/*')
-        .pipe($.gulp.dest('./app/css/fonts/'));
-
-    // изображения для стилей
-    $.gulp.src('./_dev/_sass/img/*')
-        .pipe($.gulp.dest('./app/css/img/'));
-
-    $.gulp.src(['./_dev/_server/.htaccess', './_dev/*.ico'])
-        .pipe($.gulp.dest('./app'));
-
-    $.gulp.src('./_dev/_server/uploads')
-        .pipe($.gulp.dest('./app/'));
 });
 
 //
@@ -117,6 +100,14 @@ $.gulp.task('jade-dTpl', function () {
         .pipe($.gulp.dest('./_dev/_jade/_dTemplates'));
 });
 
+$.gulp.task('css-minify', function () {
+    return $.gulp.src('./app/css/**/*.css')
+        // вызов плагина gulp-jade
+        .pipe($.minifyCss()).on('error', log)
+        .pipe($.gulp.dest('./app/css'));
+});
+
+
 //
 // Собираем проект без PHP
 //
@@ -140,47 +131,59 @@ $.gulp.task('build-without-php', ['jade', 'jade-views', 'jade-dTpl', 'sass'], fu
         .pipe(assets.restore()).on('error', log)
         .pipe($.useref()).on('error', log)
         .pipe($.gulp.dest(productionPath)).on('error', log);
-
-    $.gulp.src('./_dev/_jade/_views/*.html')
-        .pipe($.gulp.dest('./app/views/'));
-
-    $.gulp.src('./_dev/_jade/_dTemplates/*.html')
-        .pipe($.gulp.dest('./app/dTemplates/'));
-
-    // шрифты
-    $.gulp.src('./_dev/_sass/fonts/*')
-        .pipe($.gulp.dest('./app/css/fonts/'));
-
-    // изображения для стилей
-    $.gulp.src('./_dev/_sass/img/*')
-        .pipe($.gulp.dest('./app/css/img/'));
-
-    $.gulp.src('./_dev/*.ico')
-        .pipe($.gulp.dest('./app'));
-});
-
-$.gulp.task('connect', function () {
-    $.connect.server({
-        root: productionPath,
-        livereload: true
-    });
-});
-
-$.gulp.task('html', function () {
-    $.gulp.src('./app/index.html')
-        .pipe(connect.reload());
 });
 
 //
 //====================================
 //
 
+$.gulp.task('views', function () {
+    return $.gulp.src('./_dev/_jade/_views/*.html')
+        .pipe($.gulp.dest('./app/views/'));
+});
+
+$.gulp.task('d-templates', function () {
+    return $.gulp.src('./_dev/_jade/_dTemplates/*.html')
+        .pipe($.gulp.dest('./app/dTemplates/'));
+});
+
+// шрифты
+$.gulp.task('fonts', function () {
+    return $.gulp.src('./_dev/_sass/fonts/*')
+        .pipe($.gulp.dest('./app/css/fonts/'));
+});
+// изображения для стилей
+$.gulp.task('css-img', function () {
+    return $.gulp.src('./_dev/_sass/img/*')
+        .pipe($.gulp.dest('./app/css/img/'));
+});
+
+$.gulp.task('ico', function () {
+    return $.gulp.src('./_dev/*.ico')
+        .pipe($.gulp.dest('./app'));
+});
+
+$.gulp.task('uploads', function () {
+    return $.gulp.src('./_dev/_server/uploads')
+        .pipe($.gulp.dest('./app/'));
+});
+
+$.gulp.task('htaccess', function () {
+    return $.gulp.src(['./_dev/_server/.htaccess', './_dev/*.ico'])
+        .pipe($.gulp.dest('./app'));
+});
+
+$.gulp.task('build-with-php_css-minify', function (callback) {
+    $.runSequence(['jade-views', 'jade-dTpl', 'sass'], 'build-with-php', ['views', 'd-templates', 'fonts', 'css-img', 'ico', 'uploads', 'htaccess'], 'css-minify', callback)
+});
+
+
 $.gulp.task('watch-without-php', ['build-without-php'], function () {
     $.gulp.watch(['./_dev/_jade/**/*.jade', './_dev/_js/**/*.js', './_dev/_sass/**/*.scss', './_dev/_sass/fonts/*'], ['build-without-php']);
 });
 
-$.gulp.task('watch-with-php', ['build-with-php'], function () {
-    $.gulp.watch(['./_dev/_jade/_dTemplates/*.jade', './_dev/_jade/_views/*.jade', './_dev/_js/**/*.js', './_dev/_server/**/*.php', './_dev/_sass/**/*.scss', './_dev/_sass/fonts/*'], ['watch-with-php']);
+$.gulp.task('watch-with-php', ['build-with-php_css-minify'], function () {
+    $.gulp.watch(['./_dev/_jade/_dTemplates/*.jade', './_dev/_jade/_views/*.jade', './_dev/_js/**/*.js', './_dev/_server/**/*.php', './_dev/_sass/**/*.scss', './_dev/_sass/fonts/*'], ['build-with-php_css-minify']);
 });
 
 $.gulp.task('default', ['watch-with-php']);
